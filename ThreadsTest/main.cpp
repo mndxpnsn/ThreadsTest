@@ -33,7 +33,7 @@ int main(int argc, const char * argv[]) {
     pthread_t thread_ids[NUM_THREADS];
     u_type * args_and_data_vec = new u_type[NUM_THREADS];
     
-    /* set arguments to runner */
+    /* set runner arguments */
     for (int i = 0; i < NUM_THREADS; ++i)
         args_and_data_vec[i].arg = 2 * (i + 1);
 
