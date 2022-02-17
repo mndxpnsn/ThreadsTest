@@ -10,7 +10,7 @@
 #include <pthread.h>
 #include <thread>
 
-#define NUM_THREADS 10
+#define NUM_THREADS 8
 
 typedef struct user_type {
     int arg;
@@ -46,7 +46,7 @@ int main(int argc, const char * argv[]) {
         pthread_create(&thread_ids[i], &thread_attr[i], runner, &args_and_data_vec[i]);
     }
     
-    // check number of hardware threads used
+    // check number of hardware threads available
     unsigned num_hardware_threads = std::thread::hardware_concurrency();
 
     // wait for the threads to exit
