@@ -8,7 +8,6 @@
 
 #include <iostream>
 #include <pthread.h>
-#include <thread>
 
 #define NUM_THREADS 8
 
@@ -45,9 +44,6 @@ int main(int argc, const char * argv[]) {
         // create the thread
         pthread_create(&thread_ids[i], &thread_attr[i], runner, &args_and_data_vec[i]);
     }
-    
-    // check number of hardware threads available
-    unsigned num_hardware_threads = std::thread::hardware_concurrency();
 
     // wait for the threads to exit
     for (int i = 0; i < NUM_THREADS; ++i)
@@ -56,8 +52,6 @@ int main(int argc, const char * argv[]) {
     // print data
     for (int i = 0; i < NUM_THREADS; ++i)
         std::cout << i << ": " << args_and_data_vec[i].data << std::endl;
-    
-    std::cout << "num hardware threads: " << num_hardware_threads << std::endl;
     
     return 0;
 }
