@@ -17,10 +17,10 @@ typedef struct user_type {
     long output;
 } u_type;
 
-void * runner(void * input_and_output_vec) {
+void * runner(void * input_and_output) {
     
     // get arguments
-    u_type * var = (u_type *) input_and_output_vec;
+    u_type * var = (u_type *) input_and_output;
     
     // do something intensive
     for(long i = 0; i < (long) 6 * INT_MAX; ++i) {}
