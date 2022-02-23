@@ -6,22 +6,28 @@
 //  Playing with threads.
 //
 
+#include <chrono>
 #include <iostream>
 #include <pthread.h>
 
-#define NUM_THREADS 8
+#define NUM_THREADS 4
 
 typedef struct user_type {
     int arg;
-    int data;
+    long data;
 } u_type;
 
 void * runner(void * args_and_data) {
     
     // get arguments
     u_type * var = (u_type *) args_and_data;
+    
+    // do something intensive
+    for(long i = 0; i < (long) 6 * INT_MAX; ++i) {}
+
     // set data
     var->data = var->arg / 2;
+    
     // exit success
     pthread_exit(0);
 }
@@ -36,7 +42,10 @@ int main(int argc, const char * argv[]) {
     // set runner arguments
     for (int i = 0; i < NUM_THREADS; ++i)
         args_and_data_vec[i].arg = 2 * (i + 1);
-
+    
+    // start timing
+    auto start_timing = std::chrono::steady_clock::now();
+    
     // create threads
     for (int i = 0; i < NUM_THREADS; ++i) {
         // set the default attributes of the thread
@@ -49,9 +58,18 @@ int main(int argc, const char * argv[]) {
     for (int i = 0; i < NUM_THREADS; ++i)
         pthread_join(thread_ids[i], NULL);
     
+    // end timing
+    auto end_timing = std::chrono::steady_clock::now();
+
+    // store the time difference between start and end in (s)
+    auto time = std::chrono::duration_cast<std::chrono::seconds>(end_timing - start_timing);
+    
     // print data
     for (int i = 0; i < NUM_THREADS; ++i)
         std::cout << i << ": " << args_and_data_vec[i].data << std::endl;
+    
+    // print timing
+    std::cout << "time: " << time.count() << " (s)" << std::endl;
     
     return 0;
 }
