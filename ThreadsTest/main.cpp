@@ -19,13 +19,13 @@ typedef struct user_type {
 
 void * runner(void * input_and_output) {
     
-    // get arguments
+    // get input
     u_type * var = (u_type *) input_and_output;
     
     // do something intensive
     for(long i = 0; i < (long) 6 * INT_MAX; ++i) {}
 
-    // set data
+    // set output
     var->output = var->input / 2;
     
     // exit success
