@@ -9,6 +9,7 @@
 #include <chrono>
 #include <iostream>
 #include <pthread.h>
+#include <thread>
 
 #define NUM_THREADS 4
 
@@ -22,8 +23,8 @@ void * runner(void * input_and_output) {
     // get input
     u_type * var = (u_type *) input_and_output;
     
-    // do something intensive
-    for(long i = 0; i < (long) 6 * INT_MAX; ++i) {}
+    // simulate some intensive computation
+    std::this_thread::sleep_for(std::chrono::seconds(5));
 
     // set output
     var->output = var->input / 2;
