@@ -19,7 +19,7 @@ typedef struct user_type {
 } u_type;
 
 void * runner(void * input_and_output) {
-    //This function executes in parallel
+    // this function executes in parallel
     
     // get input
     u_type * var = (u_type *) input_and_output;
