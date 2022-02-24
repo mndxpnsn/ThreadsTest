@@ -11,21 +11,21 @@
 #include <pthread.h>
 #include <thread>
 
-const int delay_time = 1; // sleep time in seconds
+const int TIME_DELAY = 1;
 
 typedef struct user_type {
     int input;
     long output;
 } u_type;
 
-void * runner(void * input_and_output) {
+void * runner_par(void * input_and_output) {
     // this function executes in parallel
     
     // get input
     u_type * var = (u_type *) input_and_output;
     
     // simulate some intensive computation
-    std::this_thread::sleep_for(std::chrono::seconds(delay_time));
+    std::this_thread::sleep_for(std::chrono::seconds(TIME_DELAY));
 
     // set output
     var->output = var->input / 2;
@@ -34,14 +34,14 @@ void * runner(void * input_and_output) {
     pthread_exit(0);
 }
 
-void runner(u_type * input_and_output) {
+void runner_seq(u_type * input_and_output) {
     // this function executes sequentially
     
     // get input
     u_type * var = input_and_output;
     
     // simulate some intensive computation
-    std::this_thread::sleep_for(std::chrono::seconds(delay_time));
+    std::this_thread::sleep_for(std::chrono::seconds(TIME_DELAY));
 
     // set output
     var->output = var->input / 2;
@@ -56,7 +56,7 @@ void execute_parallel(u_type * input_and_output_vec, int size_vec) {
         // set the default attributes of the thread
         pthread_attr_init(&thread_attr[i]);
         // create the thread
-        pthread_create(&thread_ids[i], &thread_attr[i], runner, &input_and_output_vec[i]);
+        pthread_create(&thread_ids[i], &thread_attr[i], runner_par, &input_and_output_vec[i]);
     }
 
     // wait for the threads to exit
@@ -66,9 +66,8 @@ void execute_parallel(u_type * input_and_output_vec, int size_vec) {
 
 void execute_sequential(u_type * input_and_output_vec, int size_vec) {
     
-    for (int i = 0; i < size_vec; ++i) {
-        runner(&input_and_output_vec[i]);
-    }
+    for (int i = 0; i < size_vec; ++i)
+        runner_seq(&input_and_output_vec[i]);
 }
 
 int main(int argc, const char * argv[]) {
