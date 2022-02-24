@@ -34,17 +34,20 @@ void * runner_par(void * input_and_output) {
     pthread_exit(0);
 }
 
-void runner_seq(u_type * input_and_output) {
+void * runner_seq(void * input_and_output) {
     // this function executes sequentially
     
     // get input
-    u_type * var = input_and_output;
+    u_type * var = (u_type *) input_and_output;
     
     // simulate some intensive computation
     std::this_thread::sleep_for(std::chrono::seconds(TIME_DELAY));
 
     // set output
     var->output = var->input / 2;
+    
+    // exit success
+    return nullptr;
 }
 
 void execute_parallel(u_type * input_and_output_vec, int size_vec) {
