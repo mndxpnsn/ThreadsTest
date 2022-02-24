@@ -19,7 +19,7 @@ typedef struct user_type {
 } u_type;
 
 void * runner_par(void * input_and_output) {
-    // this function executes in parallel
+    // this function is executed in parallel
     
     // get input
     u_type * var = (u_type *) input_and_output;
@@ -35,7 +35,7 @@ void * runner_par(void * input_and_output) {
 }
 
 void * runner_seq(void * input_and_output) {
-    // this function executes sequentially
+    // this function is executed sequentially
     
     // get input
     u_type * var = (u_type *) input_and_output;
@@ -51,6 +51,7 @@ void * runner_seq(void * input_and_output) {
 }
 
 void execute_parallel(u_type * input_and_output_vec, int size_vec) {
+    
     pthread_attr_t thread_attr[size_vec];
     pthread_t thread_ids[size_vec];
     
@@ -115,8 +116,8 @@ int main(int argc, const char * argv[]) {
     }
     
     // print timing
-    std::cout << "time: " << time_par.count() << " (s)" << std::endl;
-    std::cout << "time: " << time_seq.count() << " (s)" << std::endl;
+    std::cout << "run time parallelized: " << time_par.count() << " (s)" << std::endl;
+    std::cout << "run time sequential: " << time_seq.count() << " (s)" << std::endl;
     
     return 0;
 }
