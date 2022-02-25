@@ -115,6 +115,10 @@ int main(int argc, const char * argv[]) {
         std::cout << i << ": " << input_and_output_seq_vec[i].output << std::endl;
     }
     
+    // free data
+    delete [] input_and_output_par_vec;
+    delete [] input_and_output_seq_vec;
+    
     // print timing
     std::cout << "run time parallelized: " << time_par.count() << " (s)" << std::endl;
     std::cout << "run time sequential: " << time_seq.count() << " (s)" << std::endl;
